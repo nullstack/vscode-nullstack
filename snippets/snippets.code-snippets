@@ -42,7 +42,7 @@
 		"description": "Nullstack (render/initiate)"
   },
   "Nullstack component (render/initialize/initiate)": {
-		"prefix": "n!!!!",
+		"prefix": "n!!!",
 		"body": [
 			"import Nullstack from 'nullstack';",
 			"",
