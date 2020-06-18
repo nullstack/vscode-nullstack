@@ -1,0 +1,102 @@
+{
+	"Nullstack component (render)": {
+		"prefix": "n!",
+		"body": [
+			"import Nullstack from 'nullstack';",
+			"",
+			"class ${1:Component} extends Nullstack {",
+			"  ",
+			"  render() {",
+			"    return (",
+			"      <div> ${1:Component}${0} </div>",
+			"    )",
+			"  }",
+			"",
+			"}",
+			"",
+			"export default ${1:Component};"
+		],
+		"description": "Nullstack (render)"
+	},
+	"Nullstack component (render/initiate)": {
+		"prefix": "n!!",
+		"body": [
+			"import Nullstack from 'nullstack';",
+			"",
+			"class ${1:Component} extends Nullstack {",
+			"  ",
+			"  async initiate() {",
+			"    // your code goes here",
+			"  }",
+			"  ",
+			"  render() {",
+			"    return (",
+			"      <div> ${1:Component}${0} </div>",
+			"    )",
+			"  }",
+			"",
+			"}",
+			"",
+			"export default ${1:Component};"
+		],
+		"description": "Nullstack (render/initiate)"
+  },
+  "Nullstack component (render/initialize/initiate)": {
+		"prefix": "n!!!!",
+		"body": [
+			"import Nullstack from 'nullstack';",
+			"",
+			"class ${1:Component} extends Nullstack {",
+			"  ",
+			"  initialize() {",
+			"    // your code goes here",
+			"  }",
+			"  ",
+			"  async initiate() {",
+			"    // your code goes here",
+			"  }",
+			"  ",
+			"  render() {",
+			"    return (",
+			"      <div> ${1:Component}${0} </div>",
+			"    )",
+			"  }",
+			"",
+			"}",
+			"",
+			"export default ${1:Component};"
+		],
+		"description": "Nullstack (render/initialize/initiate)"
+	},
+	"Nullstack component (render/initialize/initiate/terminate)": {
+		"prefix": "n!!!!",
+		"body": [
+			"import Nullstack from 'nullstack';",
+			"",
+			"class ${1:Component} extends Nullstack {",
+			"  ",
+			"  initialize() {",
+			"    // your code goes here",
+			"  }",
+			"  ",
+			"  async initiate() {",
+			"    // your code goes here",
+			"  }",
+			"  ",
+			"  async terminate() {",
+			"    // your code goes here",
+			"  }",
+			"  ",
+			"  render() {",
+			"    return (",
+			"      <div> ${1:Component}${0} </div>",
+			"    )",
+			"  }",
+			"",
+			"}",
+			"",
+			"export default ${1:Component};"
+		],
+		"description": "Nullstack (render/initialize/initiate/terminate)"
+	}
+}
