@@ -20,6 +20,14 @@
                 "language": "javascript",
                 "path": "./snippets/snippets.code-snippets"
             }
+        ],
+        "languages": [
+            {
+                "id": "javascript",
+                "extensions": [
+                    ".njs"
+                ]
+            }
         ]
     }
 }
