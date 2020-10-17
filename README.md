@@ -8,5 +8,5 @@ Download the extension from [Visual Studio Code Marketplace](https://marketplace
 | -------: | ------- |
 | `n!→`   | `render` |
 | `n!!→`  | `render / initiate` |
-| `n!!!→`   | `render / initialize / initiate` |
-| `n!!!!→`  | `render / initialize / initiate / terminate` |
+| `n!!!→`   | `render / prepare / initiate` |
+| `n!!!!→`  | `render / prepare / initiate / terminate` |
