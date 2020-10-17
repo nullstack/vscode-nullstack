@@ -41,14 +41,14 @@
 		],
 		"description": "Nullstack (render/initiate)"
   },
-  "Nullstack component (render/initialize/initiate)": {
+  "Nullstack component (render/prepare/initiate)": {
 		"prefix": "n!!!",
 		"body": [
 			"import Nullstack from 'nullstack';",
 			"",
 			"class ${1:Component} extends Nullstack {",
 			"  ",
-			"  initialize() {",
+			"  prepare() {",
 			"    // your code goes here",
 			"  }",
 			"  ",
@@ -66,16 +66,16 @@
 			"",
 			"export default ${1:Component};"
 		],
-		"description": "Nullstack (render/initialize/initiate)"
+		"description": "Nullstack (render/prepare/initiate)"
 	},
-	"Nullstack component (render/initialize/initiate/terminate)": {
+	"Nullstack component (render/prepare/initiate/terminate)": {
 		"prefix": "n!!!!",
 		"body": [
 			"import Nullstack from 'nullstack';",
 			"",
 			"class ${1:Component} extends Nullstack {",
 			"  ",
-			"  initialize() {",
+			"  prepare() {",
 			"    // your code goes here",
 			"  }",
 			"  ",
@@ -97,6 +97,6 @@
 			"",
 			"export default ${1:Component};"
 		],
-		"description": "Nullstack (render/initialize/initiate/terminate)"
+		"description": "Nullstack (render/prepare/initiate/terminate)"
 	}
 }
