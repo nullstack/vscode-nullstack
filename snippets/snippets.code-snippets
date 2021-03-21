@@ -4,17 +4,17 @@
 		"body": [
 			"import Nullstack from 'nullstack';",
 			"",
-			"class ${1:Component} extends Nullstack {",
+			"class ${TM_FILENAME_BASE} extends Nullstack {",
 			"  ",
 			"  render() {",
 			"    return (",
-			"      <div> ${1:Component}${0} </div>",
+			"      <div> ${TM_FILENAME_BASE}${0} </div>",
 			"    )",
 			"  }",
 			"",
 			"}",
 			"",
-			"export default ${1:Component};"
+			"export default ${TM_FILENAME_BASE};"
 		],
 		"description": "Nullstack (render)"
 	},
@@ -23,7 +23,7 @@
 		"body": [
 			"import Nullstack from 'nullstack';",
 			"",
-			"class ${1:Component} extends Nullstack {",
+			"class ${TM_FILENAME_BASE} extends Nullstack {",
 			"  ",
 			"  async initiate() {",
 			"    // your code goes here",
@@ -31,13 +31,13 @@
 			"  ",
 			"  render() {",
 			"    return (",
-			"      <div> ${1:Component}${0} </div>",
+			"      <div> ${TM_FILENAME_BASE}${0} </div>",
 			"    )",
 			"  }",
 			"",
 			"}",
 			"",
-			"export default ${1:Component};"
+			"export default ${TM_FILENAME_BASE};"
 		],
 		"description": "Nullstack (render/initiate)"
   },
@@ -46,7 +46,7 @@
 		"body": [
 			"import Nullstack from 'nullstack';",
 			"",
-			"class ${1:Component} extends Nullstack {",
+			"class ${TM_FILENAME_BASE} extends Nullstack {",
 			"  ",
 			"  prepare() {",
 			"    // your code goes here",
@@ -58,22 +58,22 @@
 			"  ",
 			"  render() {",
 			"    return (",
-			"      <div> ${1:Component}${0} </div>",
+			"      <div> ${TM_FILENAME_BASE}${0} </div>",
 			"    )",
 			"  }",
 			"",
 			"}",
 			"",
-			"export default ${1:Component};"
+			"export default ${TM_FILENAME_BASE};"
 		],
 		"description": "Nullstack (render/prepare/initiate)"
 	},
-	"Nullstack component (render/prepare/initiate/terminate)": {
+	"Nullstack component (render/prepare/initiate/hydrate)": {
 		"prefix": "n!!!!",
 		"body": [
 			"import Nullstack from 'nullstack';",
 			"",
-			"class ${1:Component} extends Nullstack {",
+			"class ${TM_FILENAME_BASE} extends Nullstack {",
 			"  ",
 			"  prepare() {",
 			"    // your code goes here",
@@ -83,20 +83,20 @@
 			"    // your code goes here",
 			"  }",
 			"  ",
-			"  async terminate() {",
+			"  async hydrate() {",
 			"    // your code goes here",
 			"  }",
 			"  ",
 			"  render() {",
 			"    return (",
-			"      <div> ${1:Component}${0} </div>",
+			"      <div> ${TM_FILENAME_BASE}${0} </div>",
 			"    )",
 			"  }",
 			"",
 			"}",
 			"",
-			"export default ${1:Component};"
+			"export default ${TM_FILENAME_BASE};"
 		],
-		"description": "Nullstack (render/prepare/initiate/terminate)"
+		"description": "Nullstack (render/prepare/initiate/hydrate)"
 	}
 }

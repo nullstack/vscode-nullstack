@@ -9,4 +9,4 @@ Download the extension from [Visual Studio Code Marketplace](https://marketplace
 | `n!→`   | `render` |
 | `n!!→`  | `render / initiate` |
 | `n!!!→`   | `render / prepare / initiate` |
-| `n!!!!→`  | `render / prepare / initiate / terminate` |
+| `n!!!!→`  | `render / prepare / initiate / hydrate` |

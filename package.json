@@ -2,7 +2,8 @@
     "name": "vscode-nullstack",
     "displayName": "VSCode Nullstack",
     "description": "VSCode Nullstack Snippets",
-    "version": "0.0.3",
+    "icon": "images/icon-128x128.png",
+    "version": "0.0.4",
     "engines": {
         "vscode": "^1.46.0"
     },
@@ -15,6 +16,9 @@
         "Snippets"
     ],
     "contributes": {
+        "include": [
+            "src/**/*"
+        ],
         "snippets": [
             {
                 "language": "javascript",
