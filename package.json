@@ -13,8 +13,12 @@
 		"url" : "https://github.com/nullstack/vscode-nullstack"
 	},
     "categories": [
-        "Snippets"
+        "Snippets", "Programming Languages"
     ],
+    "activationEvents": [
+		"onLanguage:javascript"
+	],
+	"main": "./extension.js",
     "contributes": {
         "include": [
             "src/**/*"
