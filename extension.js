@@ -19,10 +19,17 @@ function getSymbolName(document, position) {
 				: filename + '.njs'
 		);
 	} else {
+		if (!line.trim().startsWith('<')) return null;
+		let symbol = line.substring(line.indexOf('<') + 1);
+		symbol = symbol.substring(0, symbol.match(/[/ ]/).index);
+		let renderSym = `render${symbol}`;
+		if (document.getText().indexOf(renderSym) === -1) {
+			return symbol + '.njs';
+		}
 		let idx = [];
 		for (let line = 0; line < document.lineCount; line++) {
-			const character = getLine(document, line).indexOf('renderHead');
-			if (range > -1) {
+			const character = getLine(document, line).indexOf(renderSym);
+			if (character > -1) {
 				idx = [line, character];
 				break;
 			}
@@ -33,18 +40,28 @@ function getSymbolName(document, position) {
 
 class NullstackDefinitionProvider {
 	provideDefinition(document, position) {
-		const name = getSymbolName(document, position);
-		const { uri } = vscode.workspace.getWorkspaceFolder(document.uri);
-		const filepath = path.join(uri.fsPath, '/src/', name);
-		const fileExists = fs.existsSync(filepath);
+		const definitionPath = getSymbolName(document, position);
+		if (!definitionPath) return null;
 
-		if (name) {
-			return null;
+		let uri = null;
+		let filepath = null;
+		let range = [0, 0];
+		if (typeof definitionPath === 'string') {
+			uri = vscode.workspace.getWorkspaceFolder(document.uri).uri;
+			filepath = path.join(uri.fsPath, '/src/', definitionPath);
+
+			const fileExists = fs.existsSync(filepath);
+			if (!fileExists) return null;
+		} else {
+			if (definitionPath.length === 0) return null;
+			uri = document.uri;
+			filepath = uri.fsPath;
+			range = definitionPath;
 		}
 
 		return new vscode.Location(
 			uri.with({ path: filepath }),
-			new vscode.Position(0, 0)
+			new vscode.Position(...range)
 		);
 	}
 }
