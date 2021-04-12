@@ -10,16 +10,20 @@ function getSymbolName(document, position) {
 	const line = getLine(document, position.line);
 	if (line.startsWith('import ')) {
 		let filename = line.substring(
-			line.indexOf("/") + 1,
-			line.lastIndexOf("'")
-		);
+			line.indexOf("from ") + 6,
+			line.replace(';', '').length - 1
+    );
 		return (
-			filename.indexOf('.') > -1
+      filename.substring(filename.lastIndexOf('.')).indexOf('/') < 0
 				? filename
 				: filename + '.njs'
 		);
 	} else {
-		if (!line.trim().startsWith('<')) return null;
+		const trimLine = line.trim();
+		if (
+			!trimLine.startsWith('<') ||
+			!trimLine[1].match(/^[A-Z]/)
+		) return null;
 		let symbol = line.substring(line.indexOf('<') + 1);
 		symbol = symbol.substring(0, symbol.match(/[/ ]/).index);
 		let renderSym = `render${symbol}`;
@@ -27,10 +31,10 @@ function getSymbolName(document, position) {
 			return symbol + '.njs';
 		}
 		let idx = [];
-		for (let line = 0; line < document.lineCount; line++) {
-			const character = getLine(document, line).indexOf(renderSym);
+		for (let lineId = 0; lineId < document.lineCount; lineId++) {
+			const character = getLine(document, lineId).indexOf(renderSym);
 			if (character > -1) {
-				idx = [line, character];
+				idx = [lineId, character];
 				break;
 			}
 		}
@@ -43,18 +47,15 @@ class NullstackDefinitionProvider {
 		const definitionPath = getSymbolName(document, position);
 		if (!definitionPath) return null;
 
-		let uri = null;
+		const uri = document.uri;
 		let filepath = null;
 		let range = [0, 0];
 		if (typeof definitionPath === 'string') {
-			uri = vscode.workspace.getWorkspaceFolder(document.uri).uri;
-			filepath = path.join(uri.fsPath, '/src/', definitionPath);
+      filepath = path.join(document.uri.fsPath, '../', definitionPath);
 
-			const fileExists = fs.existsSync(filepath);
-			if (!fileExists) return null;
+			if (!fs.existsSync(filepath)) return null;
 		} else {
 			if (definitionPath.length === 0) return null;
-			uri = document.uri;
 			filepath = uri.fsPath;
 			range = definitionPath;
 		}
