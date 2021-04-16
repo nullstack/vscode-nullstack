@@ -1,7 +1,7 @@
-const definitions = require('./definitions');
+const { definitions } = require('./definitions');
 
 function activate(context) {
-  context.subscriptions.push(definitions);
+  context.subscriptions.push(definitions());
 }
 
 function deactivate() { }

@@ -1,12 +1,13 @@
 const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs');
+const Defs = {};
 
-function getLine(document, line) {
+Defs.getLine = function(document, line) {
   return document.lineAt(line).text;
 }
 
-function isImportLine(line) {
+Defs.isImportLine = function(line) {
   if (
     line.startsWith('import ') ||
     line.indexOf('require(') > -1
@@ -15,7 +16,7 @@ function isImportLine(line) {
   }
 }
 
-function notRenderTag(line) {
+Defs.notRenderTag = function(line) {
   const trimLine = line.trim();
   return (
     !trimLine.startsWith('<') ||
@@ -23,14 +24,14 @@ function notRenderTag(line) {
   );
 }
 
-function getComponentName(line) {
+Defs.getComponentName = function(line) {
   let symbol = line.substring(line.indexOf('<') + 1);
-  return symbol.substring(0, symbol.match(/[/ ]/).index);
+  return symbol.substring(0, symbol.match(/[/ >]/).index);
 }
 
-function getSymbolName(document, position) {
-  const line = getLine(document, position.line);
-  const filename = isImportLine(line);
+Defs.getSymbolName = function(document, position) {
+  const line = Defs.getLine(document, position.line);
+  const filename = Defs.isImportLine(line);
   if (filename) {
     return (
       filename.substring(filename.lastIndexOf('.')).indexOf('/') < 0
@@ -38,16 +39,16 @@ function getSymbolName(document, position) {
         : filename + '.njs'
     );
   } else {
-    if (notRenderTag(line)) return null;
+    if (Defs.notRenderTag(line)) return null;
 
-    let symbol = getComponentName(line);
+    let symbol = Defs.getComponentName(line);
     let renderSym = `render${symbol}`;
     if (document.getText().indexOf(renderSym) === -1) {
       return symbol + '.njs';
     }
     let idx = [];
     for (let lineId = 0; lineId < document.lineCount; lineId++) {
-      const character = getLine(document, lineId).indexOf(renderSym);
+      const character = Defs.getLine(document, lineId).indexOf(renderSym);
       if (character > -1) {
         idx = [lineId, character];
         break;
@@ -59,7 +60,7 @@ function getSymbolName(document, position) {
 
 class NullstackDefinitionProvider {
   provideDefinition(document, position) {
-    const definitionPath = getSymbolName(document, position);
+    const definitionPath = Defs.getSymbolName(document, position);
     if (!definitionPath) return null;
 
     const uri = document.uri;
@@ -82,12 +83,15 @@ class NullstackDefinitionProvider {
   }
 }
 
-function newDefinition(definition) {
+Defs.newDefinition = function(definition) {
   return vscode.languages.registerDefinitionProvider(
     { language: "javascript" }, new definition()
   );
 }
 
-const definitions = newDefinition(NullstackDefinitionProvider);
+Defs.providers = [NullstackDefinitionProvider];
+Defs.definitions = function() {
+  return Defs.newDefinition(Defs.providers[0]);
+}
 
-module.exports = definitions;
+module.exports = Defs;
