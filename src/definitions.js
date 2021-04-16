@@ -6,26 +6,41 @@ function getLine(document, line) {
   return document.lineAt(line).text;
 }
 
+function isImportLine(line) {
+  if (
+    line.startsWith('import ') ||
+    line.indexOf('require(') > -1
+  ) {
+    return ((line).match(/[`|'|"]([^]+)[`|'|"]/) || [])[1];
+  }
+}
+
+function notRenderTag(line) {
+  const trimLine = line.trim();
+  return (
+    !trimLine.startsWith('<') ||
+    !trimLine[1].match(/^[A-Z]/)
+  );
+}
+
+function getComponentName(line) {
+  let symbol = line.substring(line.indexOf('<') + 1);
+  return symbol.substring(0, symbol.match(/[/ ]/).index);
+}
+
 function getSymbolName(document, position) {
   const line = getLine(document, position.line);
-  if (line.startsWith('import ')) {
-    let filename = line.substring(
-      line.indexOf("from ") + 6,
-      line.replace(';', '').length - 1
-    );
+  const filename = isImportLine(line);
+  if (filename) {
     return (
       filename.substring(filename.lastIndexOf('.')).indexOf('/') < 0
         ? filename
         : filename + '.njs'
     );
   } else {
-    const trimLine = line.trim();
-    if (
-      !trimLine.startsWith('<') ||
-      !trimLine[1].match(/^[A-Z]/)
-    ) return null;
-    let symbol = line.substring(line.indexOf('<') + 1);
-    symbol = symbol.substring(0, symbol.match(/[/ ]/).index);
+    if (notRenderTag(line)) return null;
+
+    let symbol = getComponentName(line);
     let renderSym = `render${symbol}`;
     if (document.getText().indexOf(renderSym) === -1) {
       return symbol + '.njs';
