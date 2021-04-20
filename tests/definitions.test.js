@@ -23,10 +23,12 @@ it('getLine() returns text of line', () => {
 
 describe('isImportLine()', () => {
   function testIsImport(line) {
-    const filename = Defs.isImportLine(line);
+    Defs.getLine = jest.fn().mockReturnValue(line);
+    const document = { lineCount: 3 };
+    const filename = Defs.isImportLine(document, 1);
     expect(filename).toBe('./Comp');
   }
-  
+
   const importLineCases = [
     ['quota', '\''],
     ['double-quota', '"'],
@@ -37,7 +39,7 @@ describe('isImportLine()', () => {
     const quota = `import Comp from ${q}./Comp${q}`;
     testIsImport(quota);
   });
-  
+
   const importStyleCases = [
     ['ES6 import', 'import "./Comp"'],
     ['require()', 'const Comp = require("./Comp")']
@@ -79,10 +81,12 @@ describe('getComponentName()', () => {
 });
 
 describe('getSymbolName()', () => {
-  it('getSymbolName() returns filename with .njs', () => {
+  it('getSymbolName() returns filename of imported', () => {
     Defs.getLine = jest.fn().mockReturnValue('import Comp from "./Comp"');
-    const filename = Defs.getSymbolName('', '');
-    expect(filename).toBe('./Comp.njs');
+
+    const documentPosition = [{ lineCount: 3 }, { line: 1 }];
+    const filename = Defs.getSymbolName(...documentPosition);
+    expect(filename).toBe('./Comp');
   });
 
   it('getSymbolName() returns innerComponent position', () => {
@@ -107,7 +111,7 @@ describe('getSymbolName()', () => {
     Defs.getLine = jest.fn().mockReturnValueOnce('<Comp/>');
 
     const filename = Defs.getSymbolName(document, {});
-    expect(filename).toBe('Comp.njs');
+    expect(filename).toBe('Comp');
   });
 });
 

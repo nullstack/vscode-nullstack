@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 const path = require('path');
-const fs = require('fs');
+const Utils = require('./utils');
 const Defs = {};
 
 Defs.getLine = function(document, line) {
@@ -36,11 +36,7 @@ Defs.getComponentName = function(line) {
 Defs.getSymbolName = function(document, position) {
   const filename = Defs.isImportLine(document, position.line);
   if (filename) {
-    return (
-      filename.substring(filename.lastIndexOf('.')).indexOf('/') < 0
-        ? filename
-        : filename + '.njs'
-    );
+    return filename;
   } else {
     const line = Defs.getLine(document, position.line);
     if (Defs.notRenderTag(line)) return null;
@@ -48,7 +44,7 @@ Defs.getSymbolName = function(document, position) {
     let symbol = Defs.getComponentName(line);
     let renderSym = `render${symbol}`;
     if (document.getText().indexOf(renderSym) === -1) {
-      return symbol + '.njs';
+      return symbol;
     }
     let idx = [];
     for (let lineId = 0; lineId < document.lineCount; lineId++) {
@@ -71,9 +67,10 @@ class NullstackDefinitionProvider {
     let filepath = null;
     let range = [0, 0];
     if (typeof definitionPath === 'string') {
-      filepath = path.join(document.uri.fsPath, '../', definitionPath);
+      const root = path.join(document.uri.fsPath, '../');
+      filepath = Utils.resolvePath(root, definitionPath);
 
-      if (!fs.existsSync(filepath)) return null;
+      if (!filepath) return null;
     } else {
       if (definitionPath.length === 0) return null;
       filepath = uri.fsPath;
