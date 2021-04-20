@@ -13,26 +13,32 @@ Utils.isDirectory = function(url) {
 }
 
 Utils.resolvePath = function(root, url) {
+  return Utils.coreResolvePath(
+    require.resolve, root, url
+  );
+}
+
+Utils.coreResolvePath = function(resolve, root, url) {
   if (url.match(/^[@a-zA-Z]/)) {
     try {
-      return require.resolve(`${root}/node_modules/${url}`);
+      return resolve(`${root}/node_modules/${url}`);
     } catch {}
   }
   url = `${root}/${url}`;
   if (Utils.isDirectory(url)) {
     try {
-      return require.resolve(`${url}/index.njs`);
+      return resolve(`${url}/index.njs`);
     } catch {}
     try {
-      return require.resolve(`${url}/index.js`);
+      return resolve(`${url}/index.js`);
     } catch {}
   }
   const njsFile = `${url}.njs`;
   if (Utils.fileExists(njsFile)) {
-    return require.resolve(njsFile);
+    return resolve(njsFile);
   }
   try {
-    return require.resolve(url);
+    return resolve(url);
   } catch {
     return false;
   }
