@@ -7,12 +7,16 @@ Defs.getLine = function(document, line) {
   return document.lineAt(line).text;
 }
 
-Defs.isImportLine = function(line) {
-  if (
-    line.startsWith('import ') ||
-    line.indexOf('require(') > -1
-  ) {
-    return ((line).match(/[`|'|"]([^]+)[`|'|"]/) || [])[1];
+Defs.isImportLine = function(document, position) {
+  for (let i = position; i < document.lineCount; i++) {
+    let line = Defs.getLine(document, i);
+    if (
+      line.startsWith('import ') ||
+      line.indexOf('require(') > -1 ||
+      line.indexOf('}') > -1
+    ) {
+      return ((line).match(/[`|'|"]([^]+)[`|'|"]/) || [])[1];
+    }
   }
 }
 
@@ -30,8 +34,7 @@ Defs.getComponentName = function(line) {
 }
 
 Defs.getSymbolName = function(document, position) {
-  const line = Defs.getLine(document, position.line);
-  const filename = Defs.isImportLine(line);
+  const filename = Defs.isImportLine(document, position.line);
   if (filename) {
     return (
       filename.substring(filename.lastIndexOf('.')).indexOf('/') < 0
@@ -39,6 +42,7 @@ Defs.getSymbolName = function(document, position) {
         : filename + '.njs'
     );
   } else {
+    const line = Defs.getLine(document, position.line);
     if (Defs.notRenderTag(line)) return null;
 
     let symbol = Defs.getComponentName(line);
