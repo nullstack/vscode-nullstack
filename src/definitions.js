@@ -71,6 +71,9 @@ class NullstackDefinitionProvider {
       filepath = Utils.resolvePath(root, definitionPath);
 
       if (!filepath) return null;
+      if (filepath.endsWith('.njs')) {
+        range = Utils.findSymPos(document, position, filepath) || range;
+      }
     } else {
       filepath = uri.fsPath;
       range = definitionPath;

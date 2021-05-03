@@ -21,14 +21,15 @@ describe('Definitions', () => {
   const nullImport = `import nullstack from 'nullstack';`;
 
   test('goTo Location if importLine', () => {
+    const classHome = `class Home extends Nullstack {}`;
     mock({ [__dirname]: {
       'src': {
         'Application.scss': '',
         'utils': {
-          'index.njs': '',
-          'Home.njs': ''
+          'index.njs': classHome,
+          'Home.njs': classHome
         },
-        'node_modules': { 'package': {'index.njs': ''} }
+        'node_modules': { 'package': { 'index.njs': classHome } }
       }
     }});
 
@@ -55,14 +56,15 @@ describe('Definitions', () => {
     }
 
     const goToPath = (url) => path.join(__dirname, 'src', url);
-    function runGoTo(gPath, pos) {
+    function runGoTo(gPath, pos, symChar) {
+      symChar = typeof symChar === 'number' ? symChar : 6;
       spyResolve(gPath);
       testGoTo(text,
-        { args: [goToPath(gPath), { args: [0, 0] }] }, 7, pos
+        { args: [goToPath(gPath), { args: [0, symChar] }] }, 7, pos
       );
     }
 
-    runGoTo('Application.scss', { line: 1, character: 11 });
+    runGoTo('Application.scss', { line: 1, character: 11 }, 0);
     runGoTo('utils/Home.njs', { line: 2, character: 8 });
     runGoTo('utils/index.njs', { line: 3, character: 8 });
     runGoTo('node_modules/package/index.njs', { line: 4, character: 3 });

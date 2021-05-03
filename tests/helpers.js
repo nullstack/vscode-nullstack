@@ -3,7 +3,8 @@ const path = require('path');
 const Helpers = {}
 
 Helpers.mockDocument = (attr = {}) => ({
-  getText: () => attr.text,
+  getText: (args) => args ? 'Home' : attr.text,
+  getWordRangeAtPosition: () => [],
   lineAt: (i) => ({ text: attr.text.split('\n')[i] }),
   lineCount: attr.lineCount || 3,
   uri: {
