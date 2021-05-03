@@ -9,7 +9,7 @@ Defs.getLine = function(document, line) {
 
 Defs.isImportLine = function(document, position) {
   for (let i = position; i < document.lineCount; i++) {
-    let line = Defs.getLine(document, i);
+    let line = Defs.getLine(document, i).trim();
     if (
       line.startsWith('import ') ||
       line.indexOf('require(') > -1 ||
@@ -72,7 +72,6 @@ class NullstackDefinitionProvider {
 
       if (!filepath) return null;
     } else {
-      if (definitionPath.length === 0) return null;
       filepath = uri.fsPath;
       range = definitionPath;
     }

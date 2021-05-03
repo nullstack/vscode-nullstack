@@ -1,5 +1,6 @@
 const Defs = require('../src/definitions');
 const vscode = require('vscode');
+const { mockDocument } = require('./helpers');
 
 it('definitions() registers list of providers', () => {
   const providers = Defs.definitions();
@@ -13,9 +14,8 @@ it('definitions() registers list of providers', () => {
 
 it('getLine() returns text of line', () => {
   const text = 'line1\nline2';
-  const document = new String();
-  const lineAt = (i) => ({ text: text.split('\n')[i]});
-  document.__proto__.lineAt = lineAt;
+  const { lineAt } = mockDocument({ text });
+  const document = { lineAt };
 
   const line = Defs.getLine(document, 1);
   expect(line).toBe(lineAt(1).text);
