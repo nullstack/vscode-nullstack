@@ -9,7 +9,7 @@ it('definitions() registers list of providers', () => {
       { language: "javascript" },
       new Defs.providers[0]()
     );
-  expect(providers).toBe(true);
+  expect(providers).toStrictEqual([true, true]);
 });
 
 it('getLine() returns text of line', () => {
