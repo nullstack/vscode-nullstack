@@ -47,11 +47,18 @@ Utils.coreResolvePath = function(resolve, root, url) {
   url = `${root}/${url}`;
   if (Utils.isDirectory(url)) {
     try {
+      return resolve(`${url}/index.nts`);
+    } catch {}
+    try {
       return resolve(`${url}/index.njs`);
     } catch {}
     try {
       return resolve(`${url}/index.js`);
     } catch {}
+  }
+  const ntsFile = `${url}.nts`;
+  if (Utils.fileExists(ntsFile)) {
+    return resolve(ntsFile);
   }
   const njsFile = `${url}.njs`;
   if (Utils.fileExists(njsFile)) {

@@ -71,7 +71,7 @@ class NullstackDefinitionProvider {
       filepath = Utils.resolvePath(root, definitionPath);
 
       if (!filepath) return null;
-      if (filepath.endsWith('.njs')) {
+      if (filepath.endsWith('.njs') || filepath.endsWith('.nts')) {
         range = Utils.findSymPos(document, position, filepath) || range;
       }
     } else {
@@ -86,15 +86,17 @@ class NullstackDefinitionProvider {
   }
 }
 
-Defs.newDefinition = function(definition) {
+Defs.newDefinition = function(language, definition) {
   return vscode.languages.registerDefinitionProvider(
-    { language: "javascript" }, new definition()
+    { language }, new definition()
   );
 }
 
 Defs.providers = [NullstackDefinitionProvider];
 Defs.definitions = function() {
-  return Defs.newDefinition(Defs.providers[0]);
+  return ['javascript', 'typescriptreact'].map(lang => {
+    return Defs.newDefinition(lang, Defs.providers[0])
+  });
 }
 
 module.exports = Defs;

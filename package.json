@@ -16,7 +16,8 @@
         "Snippets", "Programming Languages"
     ],
     "activationEvents": [
-		"onLanguage:javascript"
+        "onLanguage:javascript",
+        "onLanguage:typescriptreact"
 	],
 	"main": "./src/extension.js",
     "contributes": {
@@ -27,6 +28,10 @@
             {
                 "language": "javascript",
                 "path": "./snippets/snippets.code-snippets"
+            },
+            {
+                "language": "typescriptreact",
+                "path": "./snippets/snippets.code-snippets"
             }
         ],
         "languages": [
@@ -34,6 +39,12 @@
                 "id": "javascript",
                 "extensions": [
                     ".njs"
+                ]
+            },
+            {
+                "id": "typescriptreact",
+                "extensions": [
+                    ".nts"
                 ]
             }
         ]
