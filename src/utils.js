@@ -5,6 +5,26 @@ Utils.fileExists = function(url) {
   return fs.existsSync(url);
 }
 
+Utils.findSymPos = function(document, position, filepath) {
+  try {
+    const word = document.getText(
+      document.getWordRangeAtPosition(position)
+    );
+    const file = fs.readFileSync(filepath, 'utf8');
+    let symChar = 0;
+    let symLine = file.split('\n').findIndex(line => {
+      const idx = line.indexOf(` ${word} `);
+      if (idx > -1) {
+        symChar = idx + 1;
+        return true;
+      }
+    });
+    if (symChar > 0) {
+      return [symLine, symChar];
+    }
+  } catch {}
+}
+
 Utils.isDirectory = function(url) {
   return (
     Utils.fileExists(url) &&
@@ -27,11 +47,18 @@ Utils.coreResolvePath = function(resolve, root, url) {
   url = `${root}/${url}`;
   if (Utils.isDirectory(url)) {
     try {
+      return resolve(`${url}/index.nts`);
+    } catch {}
+    try {
       return resolve(`${url}/index.njs`);
     } catch {}
     try {
       return resolve(`${url}/index.js`);
     } catch {}
+  }
+  const ntsFile = `${url}.nts`;
+  if (Utils.fileExists(ntsFile)) {
+    return resolve(ntsFile);
   }
   const njsFile = `${url}.njs`;
   if (Utils.fileExists(njsFile)) {

@@ -9,7 +9,7 @@ Defs.getLine = function(document, line) {
 
 Defs.isImportLine = function(document, position) {
   for (let i = position; i < document.lineCount; i++) {
-    let line = Defs.getLine(document, i);
+    let line = Defs.getLine(document, i).trim();
     if (
       line.startsWith('import ') ||
       line.indexOf('require(') > -1 ||
@@ -71,8 +71,10 @@ class NullstackDefinitionProvider {
       filepath = Utils.resolvePath(root, definitionPath);
 
       if (!filepath) return null;
+      if (filepath.endsWith('.njs') || filepath.endsWith('.nts')) {
+        range = Utils.findSymPos(document, position, filepath) || range;
+      }
     } else {
-      if (definitionPath.length === 0) return null;
       filepath = uri.fsPath;
       range = definitionPath;
     }
@@ -84,15 +86,17 @@ class NullstackDefinitionProvider {
   }
 }
 
-Defs.newDefinition = function(definition) {
+Defs.newDefinition = function(language, definition) {
   return vscode.languages.registerDefinitionProvider(
-    { language: "javascript" }, new definition()
+    { language }, new definition()
   );
 }
 
 Defs.providers = [NullstackDefinitionProvider];
 Defs.definitions = function() {
-  return Defs.newDefinition(Defs.providers[0]);
+  return ['javascript', 'typescriptreact'].map(lang => {
+    return Defs.newDefinition(lang, Defs.providers[0])
+  });
 }
 
 module.exports = Defs;
