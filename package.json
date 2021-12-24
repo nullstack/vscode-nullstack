@@ -3,23 +3,24 @@
     "displayName": "VSCode Nullstack",
     "description": "VSCode Nullstack Snippets",
     "icon": "images/icon-128x128.png",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "engines": {
         "vscode": "^1.46.0"
     },
     "publisher": "ChristianMortaro",
-	"repository": {
-		"type" : "git",
-		"url" : "https://github.com/nullstack/vscode-nullstack"
-	},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nullstack/vscode-nullstack"
+    },
     "categories": [
-        "Snippets", "Programming Languages"
+        "Snippets",
+        "Programming Languages"
     ],
     "activationEvents": [
         "onLanguage:javascript",
         "onLanguage:typescriptreact"
-	],
-	"main": "./src/extension.js",
+    ],
+    "main": "./src/extension.js",
     "contributes": {
         "include": [
             "src/**/*"
