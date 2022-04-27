@@ -1,0 +1,27 @@
+{
+	"Nullstack component with props": {
+		"prefix": "n!props",
+		"body": [
+			"import Nullstack from 'nullstack';",
+			"import type { NullstackServerContext } from 'nullstack';",
+			"",
+			"type Props = NullstackServerContext & {",
+			"  /** ${TM_FILENAME_BASE} needs this */",
+			"  ${1}: ${2}",
+			"}",
+			"",
+			"class ${TM_FILENAME_BASE} extends Nullstack<Props> {",
+			"  ",
+			"  render({ ${1} }: Props) {",
+			"    return (",
+			"      <div> ${TM_FILENAME_BASE} {${1}} </div>",
+			"    )",
+			"  }",
+			"",
+			"}",
+			"",
+			"export default ${TM_FILENAME_BASE};"
+		],
+		"description": "Nullstack component with props"
+	}
+}
