@@ -3,7 +3,7 @@
     "displayName": "VSCode Nullstack",
     "description": "VSCode Nullstack Snippets",
     "icon": "images/icon-128x128.png",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "engines": {
         "vscode": "^1.46.0"
     },
@@ -43,13 +43,15 @@
             {
                 "id": "javascriptreact",
                 "extensions": [
-                    ".njs", ".jsx"
+                    ".njs",
+                    ".jsx"
                 ]
             },
             {
                 "id": "typescriptreact",
                 "extensions": [
-                    ".nts", ".tsx"
+                    ".nts",
+                    ".tsx"
                 ]
             }
         ]
