@@ -94,9 +94,9 @@ Defs.newDefinition = function(language, definition) {
 
 Defs.providers = [NullstackDefinitionProvider];
 Defs.definitions = function() {
-  return ['javascript', 'typescriptreact'].map(lang => {
-    return Defs.newDefinition(lang, Defs.providers[0])
-  });
+  return ['javascriptreact', 'typescriptreact'].map(
+    lang => Defs.newDefinition(lang, Defs.providers[0])
+  );
 }
 
 module.exports = Defs;
