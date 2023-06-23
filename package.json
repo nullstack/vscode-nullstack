@@ -3,7 +3,7 @@
     "displayName": "VSCode Nullstack",
     "description": "VSCode Nullstack Snippets",
     "icon": "images/icon-128x128.png",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "engines": {
         "vscode": "^1.46.0"
     },
