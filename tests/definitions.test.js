@@ -4,11 +4,14 @@ const { mockDocument } = require('./helpers');
 
 it('definitions() registers list of providers', () => {
   const providers = Defs.definitions();
-  expect(vscode.languages.registerDefinitionProvider)
-    .toBeCalledWith(
-      { language: "javascript" },
-      new Defs.providers[0]()
-    );
+
+  expect(vscode.languages.registerDefinitionProvider).toBeCalledTimes(2)
+
+  const languages = ["javascriptreact", "typescriptreact"]
+  for (const language of languages) {
+    expect(vscode.languages.registerDefinitionProvider)
+      .toBeCalledWith({ language }, new Defs.providers[0]());
+  }
   expect(providers).toStrictEqual([true, true]);
 });
 
